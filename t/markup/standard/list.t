@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use Test::More 0.88;
-
+use lib '/home/algol/Markdent-mine/lib';
 use lib 't/lib';
 
 use Test::Markdent;
@@ -1083,6 +1083,75 @@ EOF
     parse_ok( $text, $expect, 'drunk and lazily numbered ordered lists, nested' );
 }
 
+{
+    my $text = <<"EOF";
+1. first element
+2. second element
+
+* and another
+* list
+EOF
+    my $expect = [
+          {
+            type => "ordered_list"
+          },
+          [
+            {
+              type => "list_item",
+              bullet => "1."
+            },
+            [
+              {
+                type => "text",
+                text => "first element\n"
+              }
+            ],
+            {
+              bullet => "2.",
+              type => "list_item"
+            },
+            [
+              {
+                text => "second element\n",
+                type => "text"
+              }
+            ]
+          ],
+          {
+            type => "unordered_list"
+          },
+          [
+            {
+              bullet => "*",
+              type => "list_item"
+            },
+            [
+              {
+                text => "and another\n",
+                type => "text"
+              }
+            ],
+            {
+              type => "list_item",
+              bullet => "*"
+            },
+            [
+              {
+                text => "list\n",
+                type => "text"
+              }
+            ]
+          ]
+        ];
+
+    parse_ok( $text, $expect, "lists of different type");
+
+}
+
 
 
 done_testing();
+
+
+
+
