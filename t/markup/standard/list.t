@@ -2,7 +2,6 @@ use strict;
 use warnings;
 
 use Test::More 0.88;
-use lib '/home/algol/Markdent-mine/lib';
 use lib 't/lib';
 
 use Test::Markdent;
